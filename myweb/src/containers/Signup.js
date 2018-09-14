@@ -4,21 +4,21 @@ import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css'
 import {
   // HelpBlock,
-  Button, FormGroup, FormControl, ControlLabel
+  Button, FormGroup, FormControl, ControlLabel, HelpBlock
 } from "react-bootstrap";
 // import LoaderButton from "../components/LoaderButton";
 import "./Signup.css";
+import {Link} from "react-router-dom"
 
 export default class Signup extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isLoading: false,
+      fail: false,
       email: "",
       password: "",
       confirmPassword: "",
-      confirmationCode: "",
       newUser: null,
       startDate: ""
     };
@@ -32,10 +32,6 @@ export default class Signup extends Component {
     );
   }
 
-  // validateConfirmationForm() {
-  //   return this.state.confirmationCode.length > 0;
-  // }
-
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
@@ -48,96 +44,29 @@ export default class Signup extends Component {
     });
   }
 
-  handleSubmit = async event => {
+  handleSubmit = (event) => {
     event.preventDefault();
 
-    this.setState({ isLoading: true });
-
-    // try {
-    //   fetch('/Signup', { 
-    //     method: 'POST',
-    //     body: JSON.stringify({
-    //       'iduser': 3,
-    //       'username': this.state.email,
-    //       'password': this.state.password
-    //     })
-    //   })
-    //   .then(function(response) {
-    //     return response.json()
-    //   }).then(function(body) {
-    //     console.log(body);
-    //   });
-    //   // this.setState({
-    //   //   newUser
-    //   // });
-    // } catch (e) {
-    //   alert(e.message);
-    // }
     let reqBody = {
       username: this.state.email,
       password: this.state.password,
       birthdate: this.state.startDate
     };
-    fetch("http://localhost:3000/Signup", {
+    fetch("http://localhost:3000/Signup",{
       method: 'post',
       headers: {'Content-Type': 'application/JSON'},
       body: JSON.stringify(reqBody)
     })
-      .then((res) => {
-        console.log(res);
-        if (res.ok){
-          console.log(res.json());
-          return res.json();
-        } else {
-          console.log('Something went wrong with your fetch');
-          throw new Error ('Something went wrong with your fetch');
+      .then(response => response.json())
+      .then((response) => {
+        if(response.msg === 'success'){
+            this.props.history.push('/login')
+        }      
+        else{
+          this.setState({ fail: true})
         }
-      }).then((json) => {
-        console.log(json);
-      })
-  
-    this.setState({ isLoading: false });
+        })
   }
-
-  // handleConfirmationSubmit = async event => {
-  //   event.preventDefault();
-
-  //   this.setState({ isLoading: true });
-  // }
-
-  // renderConfirmationForm() {
-  //   return (
-  //     <form onSubmit={this.handleConfirmationSubmit}>
-  //       <FormGroup controlId="confirmationCode" bsSize="large">
-  //         <ControlLabel>Confirmation Code</ControlLabel>
-  //         <FormControl
-  //           autoFocus
-  //           type="tel"
-  //           value={this.state.confirmationCode}
-  //           onChange={this.handleChange}
-  //         />
-  //         <HelpBlock>Please check your email for the code.</HelpBlock>
-  //       </FormGroup>
-  //       <Button
-  //           block
-  //           bsSize="large"
-  //           disabled={!this.validateForm()}
-  //           type="submit"
-  //         >
-  //           Submit
-  //       </Button>
-  //       {/* <LoaderButton
-  //         block
-  //         bsSize="large"
-  //         disabled={!this.validateConfirmationForm()}
-  //         type="submit"
-  //         isLoading={this.state.isLoading}
-  //         text="Verify"
-  //         loadingText="Verifying…"
-  //       /> */}
-  //     </form>
-  //   );
-  // }
 
   renderForm() {
     return (
@@ -147,9 +76,12 @@ export default class Signup extends Component {
           <FormControl
             autoFocus
             type="email"
-            value={this.state.email}
+            placeholder="Please enter your email"
             onChange={this.handleChange}
           />
+          {this.state.fail &&
+            <span className="help-block">*This Email is already use.</span>
+          }
         </FormGroup>
         <FormGroup controlId="birthday" bsSize="large">
           <ControlLabel>Birthday</ControlLabel>
@@ -164,6 +96,7 @@ export default class Signup extends Component {
             value={this.state.password}
             onChange={this.handleChange}
             type="password"
+            placeholder="Please enter your password"
           />
         </FormGroup>
         <FormGroup controlId="confirmPassword" bsSize="large">
@@ -172,17 +105,19 @@ export default class Signup extends Component {
             value={this.state.confirmPassword}
             onChange={this.handleChange}
             type="password"
+            placeholder="Please confirm your password"
           />
         </FormGroup>
         <Button
             block
             bsSize="large"
+            bsStyle="primary"
             disabled={!this.validateForm()}
-            onClick = {this.handleSubmit}
             type="submit"
           >
             Submit
         </Button>
+        <HelpBlock>Already have an account?</HelpBlock><Link to="/login" bsStyle="default">Login</Link>
         {/* <LoaderButton
           block
           bsSize="large"

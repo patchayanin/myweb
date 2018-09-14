@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel,Modal } from "react-bootstrap";
 import "./Login.css";
+import { Link } from "react-router-dom"
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      fail: false,
       email: "",
       password: ""
     };
@@ -33,56 +35,71 @@ export default class Login extends Component {
       headers: {'Content-Type': 'application/JSON'},
       body: JSON.stringify(reqBody)
     })
-      .then((res) => {
-        console.log(res);
-        if (res.ok){
-          console.log(res.json());
-          // {res.json() === null
-          //   ? alert("Log in success!")
-          //   : alert("Wrong Username or Password")
-          // }
-        } 
-        else {
-          console.log('Something went wrong with your fetch');
-          throw new Error ('Something went wrong with your fetch');
+    .then(response => response.json())
+    .then((response) => {
+      if(response.msg === 'success'){
+        try{
+          this.props.userHasAuthenticated(true);
+          this.props.history.push('/')
+        }catch(e){
+          console.log(e)
         }
-      }).then((json) => {
-        console.log(json);
-      })
+      }      
+      else{
+        this.setState({ fail: true })
+      }
+    })
   }
 
   render() {
     return (
       <div className="Login">
-        <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="email" bsSize="large">
-            <ControlLabel>Email</ControlLabel>
-            <FormControl
-              autoFocus
-              type="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-          </FormGroup>
-          <FormGroup controlId="password" bsSize="large">
-            <ControlLabel>Password</ControlLabel>
-            <FormControl
-              value={this.state.password}
-              onChange={this.handleChange}
-              type="password"
-            />
-          </FormGroup>
-          <Button
-            block
-            bsSize="large"
-            disabled={!this.validateForm()}
-            onClick = {this.handleSubmit}
-            type="submit"
-          >
-            Login
-          </Button>
-        </form>
-      </div>
+        <Modal.Dialog>
+          <Modal.Header>
+            <Modal.Title>Login</Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            <img src="../fpo_avatar.png" class="img-responsive" alt="profile"/>
+           <form onSubmit={this.handleSubmit} class="form-responsive">  
+              <FormGroup controlId="email" bsSize="large" >
+                <ControlLabel>Email</ControlLabel>
+                <FormControl
+                  autoFocus
+                  type="email"
+                  value={this.state.email}
+                  onChange={this.handleChange}
+                />
+              </FormGroup>
+              <FormGroup controlId="password" bsSize="large">
+                <ControlLabel>Password</ControlLabel>
+                <FormControl
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                  type="password"
+                />
+                {this.state.fail &&
+                <span className="help-block">*Email or Password isn't exist.</span>
+                }
+              </FormGroup>
+              </form>
+          </Modal.Body>
+
+          <Modal.Footer>
+            <Button
+                  block
+                  bsSize="large"
+                  bsStyle="info"
+                  disabled={!this.validateForm()}
+                  onClick = {this.handleSubmit}
+                  type="submit"
+                >
+                  Login
+            </Button>
+            <Link to="/signup" bsstyle="default">Don't have an account?</Link>
+          </Modal.Footer>
+          </Modal.Dialog>
+        </div>
     );
   }
 }
