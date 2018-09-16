@@ -3,6 +3,7 @@ import Routes from "./Routes";
 import { Link, withRouter } from "react-router-dom";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import { Col, Container, Row, Footer } from 'mdbreact';
 import "./App.css";
 
 class App extends Component {
@@ -63,7 +64,29 @@ class App extends Component {
           </Nav>
         </Navbar.Collapse>
         </Navbar>
-        <Routes  childProps={childProps}/>
+          <Footer className = "footer">
+                <Container fluid className="text-center text-md-left">
+                    <Row>
+                    <Col sm="6">
+                        <h5 className="title">Footer Content</h5>
+                        <p>Here you can use rows and columns here to organize your footer content.</p>
+                    </Col>
+                    <Col sm="6">
+                        <h5 className="title">Links</h5>
+                        <ul>
+                        <li className="list-unstyled"><a href="#!">Link 1</a></li>
+                        <li className="list-unstyled"><a href="#!">Link 2</a></li>
+                        </ul>
+                    </Col>
+                    </Row>
+                </Container>
+                <div className="footer-copyright text-center py-3">
+                    <Container fluid>
+                        &copy; {(new Date().getFullYear())} Copyright: <a href="https://www.MDBootstrap.com"> MDBootstrap.com </a>
+                    </Container>
+                </div>
+            </Footer>
+      <Routes  childProps={childProps}/>   
       </div>
     );
   }

@@ -26,6 +26,16 @@
   font-size: large;
 }
 
+.footer{
+  position: fixed;
+  left: 10;
+  bottom: 0;
+  width: 85%;
+  background-color:#800501;
+  color: white;
+  text-align: center;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
