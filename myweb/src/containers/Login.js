@@ -23,14 +23,14 @@ export default class Login extends Component {
       [event.target.id]: event.target.value
     });
   }
-
+  
   handleSubmit = event => {
     event.preventDefault();
     let reqBody = {
       username: this.state.email,
       password: this.state.password
     };
-    fetch("http://localhost:3000/Login", {
+    fetch("http://localhost:3001/Login", {
       method: 'post',
       headers: {'Content-Type': 'application/JSON'},
       body: JSON.stringify(reqBody)
@@ -39,6 +39,7 @@ export default class Login extends Component {
     .then((response) => {
       if(response.msg === 'success'){
         try{
+          console.log(this.props.isAuthenticated)
           this.props.userHasAuthenticated(true);
           this.props.history.push('/')
         }catch(e){
@@ -60,8 +61,8 @@ export default class Login extends Component {
           </Modal.Header>
 
           <Modal.Body>
-            <img src="../fpo_avatar.png" class="img-responsive" alt="profile"/>
-           <form onSubmit={this.handleSubmit} class="form-responsive">  
+            <img src={require("../img_avatar2.png")} className="img-circle img-responsive" alt="profile"/>
+           <form onSubmit={this.handleSubmit} className="form-responsive">  
               <FormGroup controlId="email" bsSize="large" >
                 <ControlLabel>Email</ControlLabel>
                 <FormControl
@@ -96,7 +97,7 @@ export default class Login extends Component {
                 >
                   Login
             </Button>
-            <Link to="/signup" bsstyle="default">Don't have an account?</Link>
+            Don't have an account? <Link to="/signup" bsstyle="default">Sign Up</Link>
           </Modal.Footer>
           </Modal.Dialog>
         </div>

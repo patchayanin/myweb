@@ -4,8 +4,10 @@
     }
   
     .Login form {
+      position: inherit;
       margin: 0 auto;
       max-width: 320px;
+      max-height: auto;
     }
 
     .Login form span.help-block {
@@ -19,13 +21,14 @@
       height: 350px;
   }
     .img-responsive {
-      width:10px;
-      height: 10px;
+      display: block;
+      max-width: 25%;
+      height: auto;
       position:absolute;
       left:50%;
       top:25%;
-      margin-top:-25px;
-      margin-left:-25px;
+      margin-top:-60px;
+      margin-left:-70px;
   }
   .form-responsive {
     position:relative;

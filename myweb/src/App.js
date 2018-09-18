@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import Routes from "./Routes";
-import { Link, withRouter } from "react-router-dom";
+import { Link,withRouter } from "react-router-dom";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { Col, Container, Row, Footer } from 'mdbreact';
@@ -17,12 +17,22 @@ class App extends Component {
   
   userHasAuthenticated = authenticated => {
     this.setState({ isAuthenticated: authenticated });
+    console.log(this.state.isAuthenticated)
   }
+
+  // isAuthenticate(){
+  //   return this.state.isAuthenticated
+  // }
 
   handleLogout = event => {
     this.userHasAuthenticated(false);
     this.props.history.push("/login");
   }
+  //  handleProduct = event => {
+  //     this.state.isAuthenticated
+  //       ? this.props.history.push("/product")
+  //       : this.props.history.push("/");         
+  //  }
   
   // handlehomepage = event => {
   //   { this.state.isAuthenticated
@@ -34,13 +44,14 @@ class App extends Component {
   render() {
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,
-      userHasAuthenticated: this.userHasAuthenticated
+      userHasAuthenticated: this.userHasAuthenticated,
     };
     return (
       <div className="App container">
         <Navbar bsStyle="inverse" fluid collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
+              {/* <NavItem onClick={this.handleProduct}>Product</NavItem> */}
               {this.state.isAuthenticated
                 ? <Link to="/product">Product</Link>
                 : <Link to="/login">Product</Link>
@@ -68,8 +79,10 @@ class App extends Component {
                 <Container fluid className="text-center text-md-left">
                     <Row>
                     <Col sm="6">
-                        <h5 className="title">Footer Content</h5>
-                        <p>Here you can use rows and columns here to organize your footer content.</p>
+                        <h5 className="title">Final Sale</h5>
+                        <p>find your specific cloth right there</p>
+                        <p>line:final Sale</p>
+                        <p>Facebook:final sale</p>
                     </Col>
                     <Col sm="6">
                         <h5 className="title">Links</h5>
@@ -80,11 +93,6 @@ class App extends Component {
                     </Col>
                     </Row>
                 </Container>
-                <div className="footer-copyright text-center py-3">
-                    <Container fluid>
-                        &copy; {(new Date().getFullYear())} Copyright: <a href="https://www.MDBootstrap.com"> MDBootstrap.com </a>
-                    </Container>
-                </div>
             </Footer>
       <Routes  childProps={childProps}/>   
       </div>

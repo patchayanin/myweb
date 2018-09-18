@@ -9,6 +9,7 @@ var bcrypt = require('bcrypt');
 app.use(cors())
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json({type:'*/*'}))
+app.set('port',process.env.PORT||3001)
 
 var con = mysql.createConnection({
   host: "127.0.0.1",
@@ -97,6 +98,6 @@ app.post('/Login', function(req, res) {
     }
   });
 
-  app.listen(3000,()=>{
-    console.log('ready on http://localhost:3000')
+  app.listen(3001,()=>{
+    console.log('ready on http://localhost:3001')
 })

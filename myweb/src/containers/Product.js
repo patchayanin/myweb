@@ -3,7 +3,7 @@ import "./Product.css";
 
 export default class Product extends Component {
   render() {
-    return (
+    return (        
       <div className="Product">
         <div className="lander">
           <h1>Our Product</h1>

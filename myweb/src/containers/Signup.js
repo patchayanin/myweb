@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css'
 import {
   // HelpBlock,
-  Button, FormGroup, FormControl, ControlLabel, HelpBlock
+  Button, FormGroup, FormControl, ControlLabel,Modal
 } from "react-bootstrap";
 // import LoaderButton from "../components/LoaderButton";
 import "./Signup.css";
@@ -19,6 +19,7 @@ export default class Signup extends Component {
       email: "",
       password: "",
       confirmPassword: "",
+      show : true,
       newUser: null,
       startDate: ""
     };
@@ -52,7 +53,7 @@ export default class Signup extends Component {
       password: this.state.password,
       birthdate: this.state.startDate
     };
-    fetch("http://localhost:3000/Signup",{
+    fetch("http://localhost:3001/Signup",{
       method: 'post',
       headers: {'Content-Type': 'application/JSON'},
       body: JSON.stringify(reqBody)
@@ -70,44 +71,54 @@ export default class Signup extends Component {
 
   renderForm() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <FormGroup controlId="email" bsSize="large">
-          <ControlLabel>Email</ControlLabel>
-          <FormControl
-            autoFocus
-            type="email"
-            placeholder="Please enter your email"
-            onChange={this.handleChange}
-          />
-          {this.state.fail &&
-            <span className="help-block">*This Email is already use.</span>
-          }
-        </FormGroup>
-        <FormGroup controlId="birthday" bsSize="large">
-          <ControlLabel>Birthday</ControlLabel>
-          <DatePicker
-            selected={this.state.startDate}
-            onChange={this.handleBDChange}
-          />
-        </FormGroup>
-        <FormGroup controlId="password" bsSize="large">
-          <ControlLabel>Password</ControlLabel>
-          <FormControl
-            value={this.state.password}
-            onChange={this.handleChange}
-            type="password"
-            placeholder="Please enter your password"
-          />
-        </FormGroup>
-        <FormGroup controlId="confirmPassword" bsSize="large">
-          <ControlLabel>Confirm Password</ControlLabel>
-          <FormControl
-            value={this.state.confirmPassword}
-            onChange={this.handleChange}
-            type="password"
-            placeholder="Please confirm your password"
-          />
-        </FormGroup>
+        <Modal.Dialog>
+        <Modal.Header closeButton>
+          <Modal.Title>Signup</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <form onSubmit={this.handleSubmit}>
+            <FormGroup controlId="email" bsSize="large">
+              <ControlLabel>Email</ControlLabel>
+            <FormControl
+              autoFocus
+              type="email"
+              placeholder="Please enter your email"
+              onChange={this.handleChange}
+              />
+              {this.state.fail &&
+                <span className="help-block">*This Email is already use.</span>
+              }
+            </FormGroup>
+            <FormGroup controlId="birthday" bsSize="large">
+              <ControlLabel>Birthday</ControlLabel>
+                <DatePicker
+                  selected={this.state.startDate}
+                  onChange={this.handleBDChange}
+                />
+            </FormGroup>
+            <FormGroup controlId="password" bsSize="large">
+              <ControlLabel>Password</ControlLabel>
+              <FormControl
+                value={this.state.password}
+                onChange={this.handleChange}
+                type="password"
+                placeholder="Please enter your password"
+              />
+            </FormGroup>
+            <FormGroup controlId="confirmPassword" bsSize="large">
+              <ControlLabel>Confirm Password</ControlLabel>
+              <FormControl
+                value={this.state.confirmPassword}
+                onChange={this.handleChange}
+                type="password"
+                placeholder="Please confirm your password"
+              />
+            </FormGroup>
+            </form>
+        </Modal.Body>
+          
+        <Modal.Footer>    
         <Button
             block
             bsSize="large"
@@ -116,18 +127,12 @@ export default class Signup extends Component {
             type="submit"
           >
             Submit
-        </Button>
-        <HelpBlock>Already have an account?</HelpBlock><Link to="/login" bsStyle="default">Login</Link>
-        {/* <LoaderButton
-          block
-          bsSize="large"
-          disabled={!this.validateForm()}
-          type="submit"
-          isLoading={this.state.isLoading}
-          text="Signup"
-          loadingText="Signing up…"
-        /> */}
-      </form>
+          </Button>
+          Already have an account? <Link to="/login" bsstyle="default">Login</Link>
+            {/* <Button>Close</Button>
+            <Button bsStyle="primary">Save changes</Button> */}
+        </Modal.Footer>
+      </Modal.Dialog>
     );
   }
 
