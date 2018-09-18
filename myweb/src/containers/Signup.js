@@ -14,6 +14,9 @@ export default class Signup extends Component {
   constructor(props) {
     super(props);
 
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+
     this.state = {
       fail: false,
       email: "",
@@ -45,6 +48,14 @@ export default class Signup extends Component {
     });
   }
 
+  handleClose() {
+    this.setState({ show: false });
+  }
+
+  handleShow() {
+    this.setState({ show: true });
+  }
+
   handleSubmit = (event) => {
     event.preventDefault();
 
@@ -71,7 +82,8 @@ export default class Signup extends Component {
 
   renderForm() {
     return (
-        <Modal.Dialog>
+      <Modal show={this.state.show} onHide={this.handleClose}>
+       <Modal.Dialog>
         <Modal.Header closeButton>
           <Modal.Title>Signup</Modal.Title>
         </Modal.Header>
@@ -115,11 +127,11 @@ export default class Signup extends Component {
                 placeholder="Please confirm your password"
               />
             </FormGroup>
-            </form>
+          </form>
         </Modal.Body>
           
         <Modal.Footer>    
-        <Button
+          <Button
             block
             bsSize="large"
             bsStyle="primary"
@@ -132,7 +144,8 @@ export default class Signup extends Component {
             {/* <Button>Close</Button>
             <Button bsStyle="primary">Save changes</Button> */}
         </Modal.Footer>
-      </Modal.Dialog>
+       </Modal.Dialog>
+      </Modal>
     );
   }
 

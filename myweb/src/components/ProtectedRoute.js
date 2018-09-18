@@ -10,8 +10,3 @@ export default ({ component: C, props: cProps, ...rest }) =>
       ? <C {...props} {...cProps}/>
       : <Redirect to="/Login"/>
   )} />
-//   <Route {...rest} render={(props) => (
-//     isAuthenticated === true
-//     ? <Component {...props} handleLogout={handleLogout} />
-//     : <Redirect to="/Login"/>
-// )} />
