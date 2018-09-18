@@ -2,14 +2,12 @@
     .Login {
       padding: 60px 0;
     }
-  
     .Login form {
       position: inherit;
       margin: 0 auto;
       max-width: 320px;
       max-height: auto;
     }
-
     .Login form span.help-block {
       font-size: 14px;
       padding-bottom: 10px;
@@ -19,7 +17,14 @@
     .modal-body {
       position:relative; /* This avoids image to go off the container */
       height: 350px;
-  }
+    }
+    .modal-container {
+      position: relative;
+    }
+    .modal-container .modal, .modal-container .modal-backdrop {
+      position: absolute;
+    }
+
     .img-responsive {
       display: block;
       max-width: 25%;
@@ -29,12 +34,11 @@
       top:25%;
       margin-top:-60px;
       margin-left:-70px;
-  }
-  .form-responsive {
+    }
+    .form-responsive {
     position:relative;
     top:50%;
-  }
-  
+    }
     /* #processing{ 
       width:300px;
       height: 300px;

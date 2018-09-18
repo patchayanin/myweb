@@ -7,10 +7,14 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
 
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+
     this.state = {
       fail: false,
       email: "",
-      password: ""
+      password: "",
+      show : true
     };
   }
 
@@ -23,7 +27,16 @@ export default class Login extends Component {
       [event.target.id]: event.target.value
     });
   }
-  
+
+  handleClose() {
+    this.setState({ show: false });
+    this.props.history.push('/')
+  }
+
+  handleShow() {
+    this.setState({ show: true });
+  }
+
   handleSubmit = event => {
     event.preventDefault();
     let reqBody = {
@@ -55,8 +68,8 @@ export default class Login extends Component {
   render() {
     return (
       <div className="Login">
-        <Modal.Dialog>
-          <Modal.Header>
+        <Modal show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton>
             <Modal.Title>Login</Modal.Title>
           </Modal.Header>
 
@@ -99,7 +112,7 @@ export default class Login extends Component {
             </Button>
             Don't have an account? <Link to="/signup" bsstyle="default">Sign Up</Link>
           </Modal.Footer>
-          </Modal.Dialog>
+        </Modal>
         </div>
     );
   }

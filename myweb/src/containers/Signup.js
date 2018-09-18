@@ -50,6 +50,7 @@ export default class Signup extends Component {
 
   handleClose() {
     this.setState({ show: false });
+    this.props.history.push('/')
   }
 
   handleShow() {
@@ -83,7 +84,6 @@ export default class Signup extends Component {
   renderForm() {
     return (
       <Modal show={this.state.show} onHide={this.handleClose}>
-       <Modal.Dialog>
         <Modal.Header closeButton>
           <Modal.Title>Signup</Modal.Title>
         </Modal.Header>
@@ -144,7 +144,6 @@ export default class Signup extends Component {
             {/* <Button>Close</Button>
             <Button bsStyle="primary">Save changes</Button> */}
         </Modal.Footer>
-       </Modal.Dialog>
       </Modal>
     );
   }
