@@ -54,7 +54,7 @@ export default class Login extends Component {
         try{
           console.log(this.props.isAuthenticated)
           this.props.userHasAuthenticated(true);
-          this.props.history.push('/')
+          this.props.history.push('/product')
         }catch(e){
           console.log(e)
         }

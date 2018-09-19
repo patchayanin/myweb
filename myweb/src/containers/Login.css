@@ -15,7 +15,7 @@
     }
 
     .modal-body {
-      position:relative; /* This avoids image to go off the container */
+      position:relative; 
       height: 350px;
     }
     .modal-container {

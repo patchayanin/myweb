@@ -80,15 +80,15 @@ class App extends Component {
                     <Row>
                     <Col sm="6">
                         <h5 className="title">Final Sale</h5>
-                        <p>find your specific cloth right there</p>
-                        <p>line:final Sale</p>
-                        <p>Facebook:final sale</p>
+                        {/* <p>find your specific cloth right there</p> */}
+                        {/* <p>line:final Sale</p>
+                        <p>Facebook:final sale</p> */}
                     </Col>
                     <Col sm="6">
                         <h5 className="title">Links</h5>
                         <ul>
                         <li className="list-unstyled"><a href="#!">Link 1</a></li>
-                        <li className="list-unstyled"><a href="#!">Link 2</a></li>
+                        {/* <li className="list-unstyled"><a href="#!">Link 2</a></li> */}
                         </ul>
                     </Col>
                     </Row>
