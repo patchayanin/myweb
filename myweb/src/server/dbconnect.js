@@ -73,7 +73,7 @@ app.post('/Login', function(req, res) {
         }
         else{
             log = JSON.stringify(rows)
-            user = JSON.parse(log)[0]
+            user = JSON.parse(log)[0] //first user in query (it's contain only one person in query)
             console.log(user.password)
             console.log(post.password)
             bcrypt.compare(post.password, user.password, function(err, result) {
@@ -96,6 +96,23 @@ app.post('/Login', function(req, res) {
     else{
       console.log('Error username = null');
     }
+  });
+
+  app.post('/Product', function(req, res){
+    var post = {
+      username: req.body.username
+    }
+    // var sql = "SELECT * from product where albumname=\'"+post.username+"\'"
+      var sql = "SELECT * from product"
+      con.query(sql, function(err, rows, fields) {
+      console.log(JSON.stringify(rows))
+      var ans = JSON.stringify(rows)
+      try{
+        res.send(ans)
+      }catch(e){
+        console.log(e)
+      }
+    });
   });
 
   app.listen(3001,()=>{

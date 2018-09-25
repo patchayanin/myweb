@@ -1,45 +1,90 @@
 import React, { Component } from "react";
-// import { Clearfix,MenuItem } from "react-bootstrap";
 import { Grid,Row,Thumbnail,Button,Col } from "react-bootstrap";
 import { Container} from 'mdbreact';
 import "./Product.css";
+import ContentSort from "material-ui/SvgIcon";
 
 export default class Product extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      content: []
+    };
+    {this.createTable()}
+  }
+
+  loadDatafromdb(){
+    let reqBody = {
+      username: "Sunny Summer"
+    };
+
+    return fetch("http://localhost:3001/Product", {
+      method: 'post',
+      headers: {'Content-Type': 'application/JSON'},
+      body: JSON.stringify(reqBody)
+    })
+    .then(response => response.json())
+    .then((response) => {
+      return response
+    })
+  };
+
   createTable = () => {
-    let table = []
-  
-    // Outer loop to create parent
-    for (let i = 0; i < 3; i++) {
-      let children = []
-      //Inner loop to create children
-      for (let j = 0; j < 3; j++) {
-        children.push( 
-          <Col xs={6} md={4}>
-            <Thumbnail src="/thumbnaildiv.png" alt="242x200">
-              <h3>Thumbnail label</h3>
-              <p>Description</p>
-              <p>
-                <Button bsStyle="primary">Button</Button>
-              </p>
-            </Thumbnail>
-          </Col>
-          )
+    this.loadDatafromdb()
+    .then((response) => {
+      console.log(JSON.stringify(response))
+      var album = JSON.parse(JSON.stringify(response))
+      var length = Object.keys(album).length;
+      // console.log(length)
+      // console.log(parseInt(length, 10))
+      // console.log(album[0].albumname)
+      
+      let table = []
+      // Outer loop to create parent
+      for (let i = 0; i < 1; i++) {
+        let children = []
+        //Inner loop to create children
+        for (let j = 0; j < parseInt(length, 10); j++) {
+          children.push( 
+            <Col xs={6} md={4}>
+              <Thumbnail src={album[j].image} alt="242x200">
+                <h3>{album[j].albumname}</h3>
+                <p>{album[j].albumartrist}</p>
+                <p>{album[j].year}</p>
+                <p>
+                  <Button bsStyle="primary">Button</Button>
+                </p>
+              </Thumbnail>
+            </Col>
+            )
+        }
+        //Create the parent and add the children
+        table.push(<Row>{children}</Row>)
       }
-      //Create the parent and add the children
-      table.push(<Row>{children}</Row>)
-    }
-    return table
+      this.setState({ content: table })
+    })
   }
 
   render() {
     return (        
         <Container>
         <section className="text-center my-5">
-          <h2 className="h1-responsive font-weight-bold my-5">Our best projects</h2>
+            {this.loadDatafromdb}
+          <h2 className="h1-responsive font-weight-bold my-5">Our best products</h2>
           <p className="grey-text w-responsive mx-auto mb-5">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit est laborum.</p>
           <Grid>
-              {this.createTable()}
-          </Grid>;
+              {this.state.content}
+          </Grid>
+          <Button
+                  block
+                  bsSize="large"
+                  bsStyle="info"
+                  onClick = {this.loadDatafromdb}
+                  type="submit"
+                >
+                  submit
+            </Button>
         </section>
       </Container>
     );

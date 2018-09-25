@@ -3,7 +3,7 @@ import Routes from "./Routes";
 import { Link,withRouter } from "react-router-dom";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { Col, Container, Row, Footer } from 'mdbreact';
+import { Col, Container, Row, Footer ,FormInline, Button} from 'mdbreact';
 import "./App.css";
 
 class App extends Component {
@@ -62,7 +62,13 @@ class App extends Component {
           <Navbar.Collapse>
           <Nav pullRight>
             {this.state.isAuthenticated
-              ? <NavItem onClick={this.handleLogout}>Logout</NavItem>
+              ? <Fragment>
+                 <FormInline className="md-form mr-auto m-0">
+                  <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" />
+                  <Button gradient="aqua" rounded size="sm" type="submit" className="mr-auto">Search</Button>
+                  <Button onClick={this.handleLogout}>Logout</Button>
+                </FormInline>
+                </Fragment>
               : <Fragment>
                 <LinkContainer to="/signup">
                   <NavItem>Signup</NavItem>
@@ -75,7 +81,7 @@ class App extends Component {
           </Nav>
         </Navbar.Collapse>
         </Navbar>
-          <Footer className = "footer">
+          {/* <Footer className = "footer">
                 <Container fluid className="text-center text-md-left">
                     <Row>
                     <Col sm="6">
@@ -83,17 +89,17 @@ class App extends Component {
                         {/* <p>find your specific cloth right there</p> */}
                         {/* <p>line:final Sale</p>
                         <p>Facebook:final sale</p> */}
-                    </Col>
+                    {/* </Col>
                     <Col sm="6">
                         <h5 className="title">Links</h5>
                         <ul>
                         <li className="list-unstyled"><a href="#!">Link 1</a></li>
                         {/* <li className="list-unstyled"><a href="#!">Link 2</a></li> */}
-                        </ul>
+                        {/* </ul>
                     </Col>
                     </Row>
-                </Container>
-            </Footer>
+                </Container> */}
+            {/* </Footer> */} 
       <Routes  childProps={childProps}/>   
       </div>
     );
