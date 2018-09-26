@@ -11,7 +11,10 @@
   .Product .lander p {
     color: #999;
   }
-
-  .align-items-center{
-    
+  
+  .Product .createTable .pricealbum{
+    color: red;
   }
+  /* .align-items-center{
+    
+  } */

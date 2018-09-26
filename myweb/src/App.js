@@ -3,7 +3,8 @@ import Routes from "./Routes";
 import { Link,withRouter } from "react-router-dom";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { Col, Container, Row, Footer ,FormInline, Button} from 'mdbreact';
+import { Button, FormGroup, FormControl, ControlLabel} from "react-bootstrap";
+import { Col, Container, Row, Footer ,FormInline} from 'mdbreact';
 import "./App.css";
 
 class App extends Component {
@@ -11,7 +12,9 @@ class App extends Component {
     super(props);
   
     this.state = {
-      isAuthenticated: false
+      isAuthenticated: false,
+      input:"",
+      search: ""
     };
   }
   
@@ -28,23 +31,26 @@ class App extends Component {
     this.userHasAuthenticated(false);
     this.props.history.push("/");
   }
-  //  handleProduct = event => {
-  //     this.state.isAuthenticated
-  //       ? this.props.history.push("/product")
-  //       : this.props.history.push("/");         
-  //  }
-  
-  // handlehomepage = event => {
-  //   { this.state.isAuthenticated
-  //     ?  this.props.history.push("/")
-  //     :  this.props.history.push("/login");
-  //   }
-  // }
+
+  handleChange = event => {
+    this.setState({
+      input: event.target.value
+    });
+    console.log(this.state.input)
+  }
+
+  handleSearch = input => {
+    this.setState({
+      search: this.state.input
+    });
+    console.log(this.state.search)
+  }
   
   render() {
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,
       userHasAuthenticated: this.userHasAuthenticated,
+      isSearching : this.state.search
     };
     return (
       <div className="App container">
@@ -64,10 +70,22 @@ class App extends Component {
             {this.state.isAuthenticated
               ? <Fragment>
                  <FormInline className="md-form mr-auto m-0">
-                  <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" />
-                  <Button gradient="aqua" rounded size="sm" type="submit" className="mr-auto">Search</Button>
+                  <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" 
+                  onChange={this.handleChange}/>
+                  <Button type="submit" onClick={this.handleSearch}>Search</Button>
                   <Button onClick={this.handleLogout}>Logout</Button>
                 </FormInline>
+               <FormInline>
+               <form>
+                  {/* <input
+                    placeholder="Search for..."
+                    ref={input => this.state.input = input}
+                    // onChange={this.handleChange(ref)}
+                  /> */}
+                </form>
+                {/* <Button type="submit" onClick={this.handleSearch(this.state.input)}>Search</Button> */}
+                <Button onClick={this.handleLogout}>Logout</Button>
+               </FormInline>
                 </Fragment>
               : <Fragment>
                 <LinkContainer to="/signup">

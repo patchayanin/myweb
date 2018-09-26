@@ -100,10 +100,14 @@ app.post('/Login', function(req, res) {
 
   app.post('/Product', function(req, res){
     var post = {
-      username: req.body.username
+      keywordsearch: req.body.search
     }
     // var sql = "SELECT * from product where albumname=\'"+post.username+"\'"
+      console.log(post.keywordsearch)
       var sql = "SELECT * from product"
+      if(post.keywordsearch != "") {
+          sql = "SELECT * from product where albumartist=\'"+post.keywordsearch+"\'"
+      }
       con.query(sql, function(err, rows, fields) {
       console.log(JSON.stringify(rows))
       var ans = JSON.stringify(rows)

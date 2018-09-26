@@ -16,7 +16,7 @@ export default class Product extends Component {
 
   loadDatafromdb(){
     let reqBody = {
-      username: "Sunny Summer"
+      search: this.props.isSearching
     };
 
     return fetch("http://localhost:3001/Product", {
@@ -33,6 +33,7 @@ export default class Product extends Component {
   createTable = () => {
     this.loadDatafromdb()
     .then((response) => {
+      console.log(this.props.isSearching)
       console.log(JSON.stringify(response))
       var album = JSON.parse(JSON.stringify(response))
       var length = Object.keys(album).length;
@@ -50,10 +51,10 @@ export default class Product extends Component {
             <Col xs={6} md={4}>
               <Thumbnail src={album[j].image} alt="242x200">
                 <h3>{album[j].albumname}</h3>
-                <p>{album[j].albumartrist}</p>
-                <p>{album[j].year}</p>
-                <p>
-                  <Button bsStyle="primary">Button</Button>
+                <p>{album[j].albumartist}</p>
+                {/* <p>{album[j].year}</p> */}
+                <p className="pricealbum">
+                  {album[j].price}Baht &nbsp; &nbsp;<Button bsStyle="primary">Detail</Button>
                 </p>
               </Thumbnail>
             </Col>
