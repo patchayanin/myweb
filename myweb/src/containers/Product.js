@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Grid,Row,Thumbnail,Button,Col } from "react-bootstrap";
 import { Container} from 'mdbreact';
 import "./Product.css";
-import ContentSort from "material-ui/SvgIcon";
 
 export default class Product extends Component {
   constructor(props) {
@@ -16,7 +15,7 @@ export default class Product extends Component {
 
   loadDatafromdb(){
     let reqBody = {
-      search: this.props.isSearching
+      search: ""
     };
 
     return fetch("http://localhost:3001/Product", {

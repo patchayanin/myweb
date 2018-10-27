@@ -3,8 +3,8 @@ import Routes from "./Routes";
 import { Link,withRouter } from "react-router-dom";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { Button, FormGroup, FormControl, ControlLabel} from "react-bootstrap";
-import { Col, Container, Row, Footer ,FormInline} from 'mdbreact';
+import { Button} from "react-bootstrap";
+import { FormInline} from 'mdbreact';
 import "./App.css";
 
 class App extends Component {
@@ -39,29 +39,29 @@ class App extends Component {
     console.log(this.state.input)
   }
 
-  handleSearch = input => {
-    this.setState({
-      search: this.state.input
-    });
-    console.log(this.state.search)
+  handleSearch = event => {
+    // this.setState({
+    //   search: this.state.input
+    // });
+    // console.log(this.state.search)
+    this.props.history.push("/product/search");
   }
   
   render() {
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,
       userHasAuthenticated: this.userHasAuthenticated,
-      isSearching : this.state.search
+      isSearching : this.state.input
     };
     return (
       <div className="App container">
         <Navbar bsStyle="inverse" fluid collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
-              {/* <NavItem onClick={this.handleProduct}>Product</NavItem> */}
-              {this.state.isAuthenticated
-                ? <Link to="/product">Product</Link>
-                : <Link to="/login">Product</Link>
-              }
+              <Link to="/product">Product</Link> 
+              {/* {this.state.isAuthenticated
+                ? <Link to="/product">Product</Link> */}
+                {/* : <Link to="/login">Product</Link> */}
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
@@ -69,24 +69,12 @@ class App extends Component {
           <Nav pullRight>
             {this.state.isAuthenticated
               ? <Fragment>
-                 <FormInline className="md-form mr-auto m-0">
-                  <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" 
-                  onChange={this.handleChange}/>
-                  <Button type="submit" onClick={this.handleSearch}>Search</Button>
-                  <Button onClick={this.handleLogout}>Logout</Button>
-                </FormInline>
-               <FormInline>
-               <form>
-                  {/* <input
-                    placeholder="Search for..."
-                    ref={input => this.state.input = input}
-                    // onChange={this.handleChange(ref)}
-                  /> */}
-                </form>
-                {/* <Button type="submit" onClick={this.handleSearch(this.state.input)}>Search</Button> */}
-                <Button onClick={this.handleLogout}>Logout</Button>
-               </FormInline>
+                  <LinkContainer to="/search">
+                    <NavItem>Search</NavItem>
+                  </LinkContainer>
+                    <NavItem onClick={this.handleLogout}>Logout</NavItem>
                 </Fragment>
+              // <NavItem onClick={this.handleLogout}>Logout</NavItem>
               : <Fragment>
                 <LinkContainer to="/signup">
                   <NavItem>Signup</NavItem>
@@ -116,7 +104,7 @@ class App extends Component {
                         {/* </ul>
                     </Col>
                     </Row>
-                </Container> */}
+                </Container4> */}
             {/* </Footer> */} 
       <Routes  childProps={childProps}/>   
       </div>
