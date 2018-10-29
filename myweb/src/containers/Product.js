@@ -70,21 +70,11 @@ export default class Product extends Component {
     return (        
         <Container>
         <section className="text-center my-5">
-            {this.loadDatafromdb}
           <h2 className="h1-responsive font-weight-bold my-5">Our best products</h2>
           <p className="grey-text w-responsive mx-auto mb-5">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit est laborum.</p>
           <Grid>
               {this.state.content}
           </Grid>
-          <Button
-                  block
-                  bsSize="large"
-                  bsStyle="info"
-                  onClick = {this.loadDatafromdb}
-                  type="submit"
-                >
-                  submit
-            </Button>
         </section>
       </Container>
     );

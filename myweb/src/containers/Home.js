@@ -12,15 +12,6 @@ export default class Home extends Component {
         <div className="lander">
           <h1>Final Sale</h1>
           <p>place where you can find the most beautiful cloth sale</p>
-          <Button
-                  block
-                  bsSize="large"
-                  bsStyle="info"
-                  onClick = {this.handleSubmit}
-                  type="submit"
-                >
-                  submit
-            </Button>
         </div>
       </div>
     );

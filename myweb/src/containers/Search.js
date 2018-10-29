@@ -1,28 +1,91 @@
 import React, { Component } from "react";
-import { Button} from "react-bootstrap";
 import "./Search.css";
 
-export default class Search extends Component {
-  handleSubmit = event =>{
-    console.log(this.props.isAuthenticated)
+  class ProductRow extends React.Component {
+    render() {
+      const product = this.props.product;
+      
+      return (
+        <tr>
+          <td>{product.albumName}</td>
+          <td>{product.albumArtist}</td>
+          <td>{product.price}</td>
+          <td>{product.year}</td>
+        </tr>
+      );
+    }
   }
-  render() {
-    return (
-      <div className="Search">
-          <div className="lander">
-          <h1>Final Sale</h1>
-          <p>This is Search page!!! you can edit Table in this page</p>
-          <Button
-                  block
-                  bsSize="large"
-                  bsStyle="info"
-                  onClick = {this.handleSubmit}
-                  type="submit"
-                >
-                  submit
-            </Button>
+  
+  class ProductTable extends React.Component {
+    constructor(props) {
+      super(props);
+  
+      this.state = {
+        PRODUCTS: []
+      };
+      {this.loadDatafromdb()}
+    }
+
+    loadDatafromdb(){
+      let reqBody = {
+        search: ""
+      };
+  
+      return fetch("http://localhost:3001/Product", {
+        method: 'post',
+        headers: {'Content-Type': 'application/JSON'},
+        body: JSON.stringify(reqBody)
+      })
+      .then(response => response.json())
+      .then((response) => {
+          console.log(JSON.stringify(response))
+          var album = JSON.parse(JSON.stringify(response))
+          var length = Object.keys(album).length;
+          // console.log(length)
+          // console.log(parseInt(length, 10))
+          // console.log(album[0].albumname)  
+          const tmpPRODUCTS = [];
+          for(let i=0;i<length;i++){
+              tmpPRODUCTS.push({
+                albumName:album[i].albumname, 
+                albumArtist: album[i].albumartist,
+                price:album[i].price,
+                year:album[i].year
+              })
+          };
+          this.setState({PRODUCTS:tmpPRODUCTS})
+      })
+    };
+
+    
+
+    render() {
+      const rows = []; 
+      this.state.PRODUCTS.forEach((product) => {
+        rows.push(
+          <ProductRow
+            product={product}
+            key={product.albumName}
+          />
+        );
+      });
+
+      return (
+        <div>
+        <table>
+          <thead>
+            <tr>
+              <th>albumName</th>
+              <th>albumArtist</th>
+              <th>Price</th>
+              <th>Year</th>
+            </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </table>
         </div>
-      </div>
-    );
+      );
+    }
   }
-}
+  
+  export default ProductTable;
