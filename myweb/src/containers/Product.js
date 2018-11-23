@@ -71,7 +71,7 @@ export default class Product extends Component {
         <Container>
         <section className="text-center my-5">
           <h2 className="h1-responsive font-weight-bold my-5">Our best products</h2>
-          <p className="grey-text w-responsive mx-auto mb-5">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit est laborum.</p>
+          <p className="grey-text w-responsive mx-auto mb-5">This is website for sale korea music album</p>
           <Grid>
               {this.state.content}
           </Grid>

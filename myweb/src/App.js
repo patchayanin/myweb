@@ -1,10 +1,9 @@
 import React, { Component, Fragment } from "react";
 import Routes from "./Routes";
 import { Link,withRouter } from "react-router-dom";
-import { Nav, Navbar, NavItem } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
-import { Button} from "react-bootstrap";
-import { FormInline} from 'mdbreact';
+import { Nav, Navbar, NavItem, } from "react-bootstrap";
+import { LinkContainer} from "react-router-bootstrap";
+import { Footer,Container,Row,Col,FormInline} from 'mdbreact';
 import "./App.css";
 
 class App extends Component {
@@ -87,26 +86,26 @@ class App extends Component {
           </Nav>
         </Navbar.Collapse>
         </Navbar>
-          {/* <Footer className = "footer">
+        <Routes  childProps={childProps}/> 
+          <Footer className = "footer">
                 <Container fluid className="text-center text-md-left">
                     <Row>
                     <Col sm="6">
                         <h5 className="title">Final Sale</h5>
-                        {/* <p>find your specific cloth right there</p> */}
-                        {/* <p>line:final Sale</p>
-                        <p>Facebook:final sale</p> */}
-                    {/* </Col>
+                        <p>line:final Sale</p>
+                        <p>Facebook:final sale</p>
+                    </Col>
                     <Col sm="6">
                         <h5 className="title">Links</h5>
                         <ul>
                         <li className="list-unstyled"><a href="#!">Link 1</a></li>
-                        {/* <li className="list-unstyled"><a href="#!">Link 2</a></li> */}
-                        {/* </ul>
+                        <li className="list-unstyled"><a href="#!">Link 2</a></li>
+                       </ul>
                     </Col>
                     </Row>
-                </Container4> */}
-            {/* </Footer> */} 
-      <Routes  childProps={childProps}/>   
+                </Container>
+            </Footer>
+        
       </div>
     );
   }

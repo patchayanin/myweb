@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import { Button,FormGroup} from "react-bootstrap";
 import "./Search.css";
+import ReactDOM from "react-dom";
 
   class ProductRow extends React.Component {
     render() {
@@ -21,11 +23,10 @@ import "./Search.css";
       super(props);
   
       this.state = {
-        PRODUCTS: []
+        PRODUCTS: [],
+        // inputsearch: ""
       };
-      {this.loadDatafromdb()}
     }
-
     loadDatafromdb(){
       let reqBody = {
         search: ""
@@ -56,12 +57,14 @@ import "./Search.css";
           this.setState({PRODUCTS:tmpPRODUCTS})
       })
     };
-
     
-
     render() {
+      {this.loadDatafromdb()}
       const rows = []; 
       this.state.PRODUCTS.forEach((product) => {
+        if (product.albumName.indexOf(this.props.filterText) === -1 && product.albumArtist.indexOf(this.props.filterText) === -1) {
+          return;
+        }
         rows.push(
           <ProductRow
             product={product}
@@ -70,9 +73,9 @@ import "./Search.css";
         );
       });
 
-      return (
+      return (  
         <div>
-        <table>
+          <table>
           <thead>
             <tr>
               <th>albumName</th>
@@ -82,10 +85,73 @@ import "./Search.css";
             </tr>
           </thead>
           <tbody>{rows}</tbody>
-        </table>
+          </table>
         </div>
       );
     }
   }
+
+  class SearchBar extends Component {
+    handleFilterTextChange = e => {
+      this.props.onFilterTextChange(e.target.value);
+    };
   
-  export default ProductTable;
+    render() {
+      return (
+        <div className="SearchBox">
+          <form>
+            <input
+              className="form-control p-4"
+              type="text"
+              placeholder="Search by albumName or albumArtist ..."
+              value={this.props.filterText}
+              onChange={this.handleFilterTextChange}
+            />
+          </form>
+        </div>
+      );
+    }
+  }
+
+  class Search extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        filterText: ""
+      };
+  
+      this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
+    }
+  
+    handleFilterTextChange(filterText) {
+      this.setState({
+        filterText: filterText
+      });
+    }
+  
+    render() {
+  
+      if (this.state.filterText === "" ) {
+        return (
+          <div>
+            <SearchBar
+              filterText={this.state.filterText}
+              onFilterTextChange={this.handleFilterTextChange}
+            />
+          </div>
+        );
+      } else {
+        return (
+          <div>
+            <SearchBar
+              filterText={this.state.filterText}
+              onFilterTextChange={this.handleFilterTextChange}
+            />
+            <ProductTable filterText={this.state.filterText} />
+          </div>
+        );
+      }
+    }
+  }
+
+  export default Search;
